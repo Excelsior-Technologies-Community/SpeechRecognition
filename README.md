@@ -1,33 +1,3 @@
-Below is your **complete professional README.md**, written **without emojis**, fully formatted for GitHub, and explaining:
-
-1. How to install your SpeechRecognition package
-2. How to import and use it
-3. How to use your `.speakToType(_:using:)` modifier
-4. How to stop listening when the app goes to background
-5. Two full example projects (ContentView 1 and ContentView 2)
-6. Proper explanation for scenePhase usage
-7. Package.swift file (for publishing)
-
-Your current final code (from the file you uploaded) has been reviewed and integrated into the README.
-Citations included: 
-
----
-
-# README.md (place this in your GitHub repository root)
-
-# SpeechRecognition
-
-A lightweight, production-ready SwiftUI speech-to-text package that supports continuous voice recognition, real-time text updates, restartable recognition, deletion handling, and background interruption control.
-
-This package exposes two main components:
-
-1. `SpeechRecognizer` – the core engine handling continuous speech recognition
-2. `.speakToType(_:using:)` – a SwiftUI modifier that attaches voice input to any TextEditor or TextField
-
-The system supports continuous transcription by combining finalized and partial segments, restarting recognition seamlessly, and updating a bound text value in real time.
-Implementation reference: SpeechRecognizer.swift 
-
----
 
 # Installation
 
