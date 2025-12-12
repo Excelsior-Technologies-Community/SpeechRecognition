@@ -1,6 +1,6 @@
 //
 //  SpeechRecognizer.swift
-//  DeliveryTrackingSystem
+//   
 //
 //   Develope By noman Belim
 //
@@ -63,37 +63,53 @@ public class SpeechRecognizer: NSObject, ObservableObject {
     }
     
     private func requestPermissions() {
+        
+        // STEP 1 — Check Info.plist keys exist
+        guard validatePermissionsKeys() else {
+            print("Missing keys in Info.plist")
+            return
+        }
+        
+        // STEP 2 — Request speech authorization
         SFSpeechRecognizer.requestAuthorization { [weak self] status in
             DispatchQueue.main.async {
                 self?.authorizationStatus = status
+                
                 if status != .authorized {
-                    self?.errorMessage = SpeechRecognitionError.notAuthorized.errorDescription
+                    self?.errorMessage = "Speech recognition permission denied."
                 }
             }
         }
         
+        // STEP 3 — Request microphone authorization
         AVAudioSession.sharedInstance().requestRecordPermission { [weak self] granted in
             if !granted {
                 DispatchQueue.main.async {
-                    self?.errorMessage = "Microphone access denied. Please enable in Settings."
+                    self?.errorMessage = "Microphone permission denied."
                 }
             }
         }
     }
-    
+
     public func start() {
+        
+        // If missing keys → do not proceed
+        guard validatePermissionsKeys() else {
+            return
+        }
+        
         if audioEngine.isRunning {
             stop()
             return
         }
         
         guard authorizationStatus == .authorized else {
-            errorMessage = SpeechRecognitionError.notAuthorized.errorDescription
+            errorMessage = "Speech permission not granted."
             return
         }
         
         guard isAvailable else {
-            errorMessage = SpeechRecognitionError.notAvailable.errorDescription
+            errorMessage = "Speech recognizer is not available."
             return
         }
         
@@ -109,6 +125,7 @@ public class SpeechRecognizer: NSObject, ObservableObject {
             shouldContinueRecording = false
         }
     }
+
     
     private func startRecording() throws {
         recognitionTask?.cancel()
@@ -289,11 +306,44 @@ public class SpeechRecognizer: NSObject, ObservableObject {
             restartRecognition()
         }
     }
-    
     deinit {
         stop()
     }
-}
+    public func checkPermissionKeys() -> String? {
+        let micKeyExists = Bundle.main.object(forInfoDictionaryKey: "NSMicrophoneUsageDescription") != nil
+        let speechKeyExists = Bundle.main.object(forInfoDictionaryKey: "NSSpeechRecognitionUsageDescription") != nil
+        
+        if !micKeyExists {
+            return "Missing NSMicrophoneUsageDescription in Info.plist (Permission)"
+        }
+        
+        if !speechKeyExists {
+            return "Missing NSSpeechRecognitionUsageDescription in Info.plist (Permission)"
+        }
+        
+        return nil // All good
+    }
+
+    
+      func validatePermissionsKeys() -> Bool {
+        let micKeyExists = Bundle.main.object(forInfoDictionaryKey: "NSMicrophoneUsageDescription") != nil
+        let speechKeyExists = Bundle.main.object(forInfoDictionaryKey: "NSSpeechRecognitionUsageDescription") != nil
+        
+        if !micKeyExists {
+            self.errorMessage = "Missing NSMicrophoneUsageDescription in Info.plist (Permision)"
+            return false
+        }
+        
+        if !speechKeyExists {
+            self.errorMessage = "Missing NSSpeechRecognitionUsageDescription in Info.plist (Permision)"
+            return false
+        }
+        
+        return true
+    }
+    } // ← CLOSE CLASS HERE
+
+
 
 // MARK: - SFSpeechRecognizerDelegate
 extension SpeechRecognizer: SFSpeechRecognizerDelegate {
@@ -368,3 +418,4 @@ public extension View {
         self.modifier(SpeakToTypeModifier(speech: speechRecognizer, binding: binding))
     }
 }
+ 
