@@ -57,6 +57,26 @@ Below are two complete examples demonstrating how to use the SpeechRecognizer an
 
 ---
 
+
+# Required Permissions
+
+Add these to Info.plist:
+
+```
+NSSpeechRecognitionUsageDescription
+NSMicrophoneUsageDescription
+```
+
+Example:
+
+```
+<key>NSSpeechRecognitionUsageDescription</key>
+<string>Speech recognition is required to convert your voice into text.</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>The app requires microphone access for speech recognition.</string>
+```
+---
+
 # Example 1: Basic Usage (Simple Speak-To-Type)
 
 This example demonstrates:
