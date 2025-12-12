@@ -1,3 +1,5 @@
+// swift-tools-version: 5.9
+
 import PackageDescription
 
 let package = Package(
@@ -15,8 +17,7 @@ let package = Package(
         .target(
             name: "SpeechToText",
             dependencies: [],
-            path: "Sources/SpeechToText",
-            resources: []
+            path: "Sources/SpeechToText"
         )
     ]
 )
