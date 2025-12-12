@@ -181,12 +181,18 @@ struct ContentView: View {
                     .foregroundColor(speechRecognizer.isRecording ? .green : .gray)
                 
                 Spacer()
-                
-                if speechRecognizer.isRecording {
-                    Image(systemName: "waveform")
-                        .foregroundColor(.red)
-                        .symbolEffect(.variableColor, options: .repeating, isActive: true)
-                }
+            if speechRecognizer.isRecording {
+  		  Image(systemName: "waveform")
+		        .foregroundColor(.red)
+		        .scaleEffect(speechRecognizer.isRecording ? 1.1 : 1.0)
+		        .animation(
+		            speechRecognizer.isRecording ?
+		                Animation.easeInOut(duration: 0.6).repeatForever(autoreverses: true)
+		                : .default,
+		            value: speechRecognizer.isRecording
+        		)
+		}
+
             }
             .padding(.horizontal)
             
