@@ -39,7 +39,7 @@ In Xcode:
 2. Enter repository URL:
 
    ```
-   https://github.com/noman1303/SpeechRecognition
+	https://github.com/Excelsior-Technologies-Community/SpeechRecognition
    ```
 3. Select the package and add it to your project.
 
