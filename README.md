@@ -1,19 +1,4 @@
-Below is your **complete professional README.md**, written **without emojis**, fully formatted for GitHub, and explaining:
 
-1. How to install your SpeechRecognition package
-2. How to import and use it
-3. How to use your `.speakToType(_:using:)` modifier
-4. How to stop listening when the app goes to background
-5. Two full example projects (ContentView 1 and ContentView 2)
-6. Proper explanation for scenePhase usage
-7. Package.swift file (for publishing)
-
-Your current final code (from the file you uploaded) has been reviewed and integrated into the README.
-Citations included: 
-
----
-
-# README.md (place this in your GitHub repository root)
 
 # SpeechRecognition
 
